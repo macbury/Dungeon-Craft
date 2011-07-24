@@ -1,0 +1,6 @@
+{
+    "output": "dungeon_craft.js",
+    "paths": {
+        "src" : "/"
+    }
+}

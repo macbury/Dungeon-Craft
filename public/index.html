@@ -1,0 +1,170 @@
+<!doctype html> 
+<html> 
+    <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"> 
+        <script src="dungeon_craft.js" type="text/javascript"></script> 
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script> 
+        <title>Dungeon Craft</title> 
+        <style type="text/css" media="screen"> 
+            body {
+                font-family: Helvetica, Arial, sans-serif;
+                font-size: 10pt;
+                background: #ddd;
+                padding: 0px;
+                margin: 0px;
+                overflow: scroll;
+              }            
+            #dungeon_craft_app {
+                position: absolute;
+                width: 800px;
+                height: 600px;
+            }
+            
+            #map_display { color: #EEE; line-height: 24px; }
+            .t { width: 16px; height: 16px; font-size: 9px; float:left; padding: 0; margin: 0; text-align:center; background: #000; border: 1px solid #000; opacity: 0.9; }
+            .t span { display: none; }
+            .t:hover span { display: block; }
+            .W { background: #669; color: #88B; border: 1px solid #47475C; }
+            .f { background: #963; color: #B85; border: 1px solid #805B36; }
+            .tested { opacity: 1.0; }
+            .clear { clear: both; }
+        </style> 
+        
+        <script type="text/javascript" language="javascript" charset="utf-8">
+          window.onload = function() {
+            var Layout = require("lib/layout");
+            var Room = require("lib/room");
+            var rooms = [];
+            $('textarea').each(function(){
+              rooms.push(new Room.Base($(this).val()));
+            });
+            
+            $("#generate").click(function(){
+              window.dungeon = new Layout.Base(parseInt($("#x").val()), parseInt($("#y").val()), rooms);
+              dungeon.make();
+              dungeon.debug("#map_display");
+              return false;
+            });
+            
+            $("#test").click(function(){
+              console.log(dungeon.test());
+              dungeon.debug("#map_display");
+              return false;
+            });
+          }
+        </script>
+    </head> 
+    <body>
+       <!--
+       <div id="dungeon_craft_app"></div> 
+       
+       
+       -->
+<textarea rows="2" cols="2">W+WWWWWW
+Wffffff+
+WffffffW
+WWWWfffW
+   WfffW
+   +fffW
+   WW+WW</textarea> 
+   
+
+ 
+    <textarea rows="2" cols="2">WWW+WWW
+Wfffff+
+WfffffW
++fffffW
+WWW+WWW</textarea>     
+<textarea rows="2" cols="2">WWW+WWWWWW+WWWW
+WfffffWWffffffW
+WfffffWWffffffW
+WfffffffffffffW
++fffffffffffff+
+WfffffffffffffW
+WfffffWWffffffW
+WfffffWWffffffW
+WWW+WWWWWWW+WWW</textarea> 
+<textarea rows="2" cols="2">WWW+WWWWWW+WWWW
+WfffffWWffffffW
+WfffffWWffffffW
+WfffffWWWWWWWWW
++fffffffffffff+
+WWWWWWWWffffffW
+WfffffWWffffffW
+WfffffWWffffffW
+WWW+WWWWWWW+WWW</textarea> 
+<textarea rows="2" cols="2">WWW+WWW
+Wfffff+
+WfffffW
++fffffW
+WfffffW
+WWfffWW
+WWWfWWW
+WWfffWW
+WffffWW
+WWWWWWW
+</textarea> 
+<textarea rows="2" cols="2">WWW+W
+WfffW
+WfffW
++fffW
+WfffWWWWW
+Wfffffff+
+WfffffffW
+W+WWWWWWW</textarea> 
+ 
+<textarea rows="2" cols="2">WWW+WWWWWWW
+WfffffffffW
+Wfffffffff+
+WfffffffffW
+WfffffffffW
++fffffffffW
+WfffffffffW
+WWWWW+WWWWW</textarea> 
+ 
+<textarea rows="2" cols="2">W+WW       WW+W
+WffWW     WWffW
++fffWWW WWWfff+
+WfffffWWWfffffW
+WWWffffWffffWWW
+  WWfffffffWW
+WWWffffWffffWWW
+WfffffWWWfffffW
++fffWWW WWWfff+
+WffWW     WWffW
+W+WW       WW+W</textarea> 
+ 
+ 
+<textarea rows="2" cols="2">WWW+WWW
+WfffffW
+WfffffW
++fffffW
+WfffffW
+WfffffW
+WfffffW
+Wfffff+
+WfffffW
+WfffffW
+WW+WWWW</textarea> 
+ 
+<textarea rows="2" cols="2">WWW+WWWWWWWW
+WffffffffffW
+Wffffffffff+
+WffffffWWWWW
+WffffffW
+WffffffW
+WfffWWWW
++fffW
+WfffW
+WW+WW</textarea> 
+      x:
+        <input type="text" value="20" id="x" />
+      y:
+        <input type="text" value="20" id="y" />
+       <a href="#" id="generate">Generate</a>
+       
+       <div id="map_display">
+
+       </div>
+    </body> 
+</html> 
