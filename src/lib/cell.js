@@ -21,11 +21,15 @@ function Cell() {
   this.type = CellType.Empty;
   this.tested = false;
   this.portal = false;
-
+  this.cid = 0;
 }
 
 Cell.prototype.isDoor = function() {
   return this.type == CellType.Door;
+}
+
+Cell.prototype.isPortal = function() {
+  return this.portal;
 }
 
 Cell.prototype.isEmpty = function() {

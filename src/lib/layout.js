@@ -30,12 +30,17 @@ DungeonLayout.prototype.debug = function(id) {
   
   for (var y = 0; y < this.cells.length; y++) {
     for (var x = 0; x < this.cells[y].length; x++) {
-      var block = $('<div class="t"><span>'+x+':'+y+'</span></div>');
+      var block = $('<div class="t"></div>');
       var c = this.cells[y][x];
-      if(c.isDoor() || c.isWall()) { 
+      if(c.isPortal()) {
+        block.addClass("P");
+        block.text("P");
+      } else if(c.isDoor() || c.isWall()) { 
         block.addClass("W");
+        block.text("W");
       } else if (c.isFloor()) {
         block.addClass("f");
+        block.text("f");
       }
       
       if (c.tested) {
@@ -50,14 +55,38 @@ DungeonLayout.prototype.debug = function(id) {
 
 DungeonLayout.prototype.make = function() {
   this.generate();
-  var areas = [];
-  while (area = this.nextArea()) {
-    console.log("New not connected area detected! Cells: "+area.length);
-    areas.push(area);
-  }
+  this.refillUnusedSpace();
+  this.surround_every_floor_with_wall();
   
-  //this.refillUnusedSpace();
-  //this.surround_every_floor_with_wall();
+  var areas = [];
+  // Connect separeted areas with portals
+  
+  while (area = this.nextArea()) {
+    areas.push(area);
+    
+    while(pos = area.pop()) {
+    
+      if(this.checkForPassableBlock(pos)) {
+        this.cells[pos[1]][pos[0]].portal = true;
+        break;
+      }
+    }
+  }
+}
+
+DungeonLayout.prototype.cellTest = function(pos, method) {
+  return (this.cells[pos[1]] && this.cells[pos[1]][pos[0]] && this.cells[pos[1]][pos[0]][method]());
+}
+
+// (-1, -1) (0, -1) (1,-1)
+// (-1, 0) (0,0) (1,0)
+// (-1, 1) (0,1) (1,1)
+
+DungeonLayout.prototype.checkForPassableBlock = function(pos) {
+  var x = pos[0];
+  var y = pos[1];
+  
+  return (this.cellTest([x+1, y-1], "isFloor") && this.cellTest([x+1, y], "isFloor") && this.cellTest([x, y+1], "isFloor"));
 }
 
 DungeonLayout.prototype.generate = function() {
@@ -202,6 +231,8 @@ DungeonLayout.prototype.refillUnusedSpace = function() {
         var cell = new Cell.Base();
         this.cells[y][x] = cell;
       }
+      
+      this.cells[y][x].cid = x + (y * this.rows);
     }
   }
   
