@@ -15,6 +15,7 @@ function Room(content) {
     $.each(row, function(x, letter) {
       var cell = new Cell.Base();
       cell.type = Cell.Type.toCellType(letter);
+      cell.readProperties(letter);
       self.cells[y].push(cell);
     });
   });

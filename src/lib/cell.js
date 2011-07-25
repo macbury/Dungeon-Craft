@@ -7,7 +7,7 @@ var CellType = {
   toCellType: function(type_string) {
     if(type_string == "W") {
       return CellType.Wall;
-    } else if(type_string == "f" ) {
+    } else if(type_string.match(/f|P|I|M/) ) {
       return CellType.Floor;
     } else if(type_string == "+" ) {
       return CellType.Door;
@@ -15,13 +15,31 @@ var CellType = {
       return CellType.Empty;
     }
   }
+
 };
 
 function Cell() {
   this.type = CellType.Empty;
   this.tested = false;
   this.portal = false;
+  this.item = false;
+  this.monster = false;
   this.cid = 0;
+  this.connected_with = null;
+}
+
+Cell.prototype.readProperties = function(type_string) {
+  if(type_string == "P") {
+    this.portal == true;
+  }
+
+  if(type_string == "I") {
+    this.item == true;
+  }
+
+  if(type_string == "M") {
+    this.monster == true;
+  }
 }
 
 Cell.prototype.isDoor = function() {

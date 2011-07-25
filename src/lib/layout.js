@@ -59,15 +59,15 @@ DungeonLayout.prototype.make = function() {
   this.surround_every_floor_with_wall();
   
   var areas = [];
+  var portals = [];
   // Connect separeted areas with portals
-  
   while (area = this.nextArea()) {
     areas.push(area);
     
     while(pos = area.pop()) {
     
       if(this.checkForPassableBlock(pos)) {
-        this.cells[pos[1]][pos[0]].portal = true;
+        //this.cells[pos[1]][pos[0]].portal = true;
         break;
       }
     }
